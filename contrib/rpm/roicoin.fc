@@ -1,0 +1,8 @@
+/usr/bin/roicoin-cli		--	gen_context(system_u:object_r:roicoin_exec_t,s0)
+/usr/sbin/roicoind		--	gen_context(system_u:object_r:roicoin_exec_t,s0)
+/usr/lib(64)?/roicoin/roicoind		--	gen_context(system_u:object_r:roicoin_exec_t,s0)
+
+/etc/roicoin(/.*)?		gen_context(system_u:object_r:roicoin_conf_t,s0)
+/var/lib/roicoin(/.*)?		gen_context(system_u:object_r:roicoin_var_lib_t,s0)
+
+(/var)?/run/roicoind(/.*)?   gen_context(system_u:object_r:roicoin_var_run_t,s0)

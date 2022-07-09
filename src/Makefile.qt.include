@@ -1,0 +1,851 @@
+# Copyright (c) 2013-2016 The Bitcoin Core developers
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+bin_PROGRAMS += qt/roicoin-qt
+EXTRA_LIBRARIES += qt/libbitcoinqt.a
+
+# roicoin qt core #
+QT_TS = \
+  qt/locale/roicoin_bg.ts \
+  qt/locale/roicoin_ca.ts \
+  qt/locale/roicoin_cs.ts \
+  qt/locale/roicoin_da.ts \
+  qt/locale/roicoin_de.ts \
+  qt/locale/roicoin_en.ts \
+  qt/locale/roicoin_en_GB.ts \
+  qt/locale/roicoin_en_US.ts \
+  qt/locale/roicoin_eo.ts \
+  qt/locale/roicoin_es.ts \
+  qt/locale/roicoin_es_ES.ts \
+  qt/locale/roicoin_fi.ts \
+  qt/locale/roicoin_fr_FR.ts \
+  qt/locale/roicoin_hi_IN.ts \
+  qt/locale/roicoin_hr.ts \
+  qt/locale/roicoin_hr_HR.ts \
+  qt/locale/roicoin_it.ts \
+  qt/locale/roicoin_ja.ts \
+  qt/locale/roicoin_ko_KR.ts \
+  qt/locale/roicoin_lt_LT.ts \
+  qt/locale/roicoin_nl.ts \
+  qt/locale/roicoin_pl.ts \
+  qt/locale/roicoin_pt.ts \
+  qt/locale/roicoin_pt_BR.ts \
+  qt/locale/roicoin_ro_RO.ts \
+  qt/locale/roicoin_ru.ts \
+  qt/locale/roicoin_sk.ts \
+  qt/locale/roicoin_sv.ts \
+  qt/locale/roicoin_tr.ts \
+  qt/locale/roicoin_uk.ts \
+  qt/locale/roicoin_vi.ts \
+  qt/locale/roicoin_zh_CN.ts \
+  qt/locale/roicoin_zh_TW.ts
+
+QT_FORMS_UI = \
+  qt/forms/addressbookpage.ui \
+  qt/forms/askpassphrasedialog.ui \
+  qt/forms/coincontroldialog.ui \
+  qt/forms/blockexplorer.ui \
+  qt/forms/editaddressdialog.ui \
+  qt/forms/governancepage.ui \
+  qt/forms/helpmessagedialog.ui \
+  qt/forms/intro.ui \
+  qt/forms/openuridialog.ui \
+  qt/forms/optionsdialog.ui \
+  qt/forms/rpcconsole.ui \
+  qt/roicoin/forms/loadingdialog.ui \
+  qt/forms/zroicontroldialog.ui \
+  qt/roicoin/forms/snackbar.ui \
+  qt/roicoin/forms/navmenuwidget.ui \
+  qt/roicoin/forms/lockunlock.ui \
+  qt/roicoin/forms/expandablebutton.ui \
+  qt/roicoin/forms/receivedialog.ui \
+  qt/roicoin/forms/walletpassworddialog.ui \
+  qt/roicoin/forms/topbar.ui \
+  qt/roicoin/forms/txrow.ui \
+  qt/roicoin/forms/dashboardwidget.ui \
+  qt/roicoin/forms/coincontrolroiwidget.ui \
+  qt/roicoin/forms/addresslabelrow.ui \
+  qt/roicoin/forms/contactdropdownrow.ui \
+  qt/roicoin/forms/mninfodialog.ui \
+  qt/roicoin/forms/optionbutton.ui \
+  qt/roicoin/forms/masternodewizarddialog.ui \
+  qt/roicoin/forms/mnrow.ui \
+  qt/roicoin/forms/masternodeswidget.ui \
+  qt/roicoin/forms/myaddressrow.ui \
+  qt/roicoin/forms/csrow.ui \
+  qt/roicoin/forms/sendchangeaddressdialog.ui \
+  qt/roicoin/forms/sendconfirmdialog.ui \
+  qt/roicoin/forms/sendcustomfeedialog.ui \
+  qt/roicoin/forms/sendchangeaddressdialog.ui \
+  qt/roicoin/forms/sendmultirow.ui \
+  qt/roicoin/forms/send.ui \
+  qt/roicoin/forms/addnewaddressdialog.ui \
+  qt/roicoin/forms/addnewcontactdialog.ui \
+  qt/roicoin/forms/requestdialog.ui \
+  qt/roicoin/forms/receivewidget.ui \
+  qt/roicoin/forms/tooltipmenu.ui \
+  qt/roicoin/forms/addresseswidget.ui \
+  qt/roicoin/forms/defaultdialog.ui \
+  qt/roicoin/forms/denomgenerationdialog.ui \
+  qt/roicoin/forms/privacywidget.ui \
+  qt/roicoin/forms/coldstakingwidget.ui \
+  qt/roicoin/settings/forms/settingsbackupwallet.ui \
+  qt/roicoin/settings/forms/settingsbittoolwidget.ui \
+  qt/roicoin/settings/forms/settingsconsolewidget.ui \
+  qt/roicoin/settings/forms/settingsdisplayoptionswidget.ui \
+  qt/roicoin/settings/forms/settingsfaqwidget.ui \
+  qt/roicoin/settings/forms/settingsinformationwidget.ui \
+  qt/roicoin/settings/forms/settingsmainoptionswidget.ui \
+  qt/roicoin/settings/forms/settingsmultisenddialog.ui \
+  qt/roicoin/settings/forms/settingsmultisendwidget.ui \
+  qt/roicoin/settings/forms/settingssignmessagewidgets.ui \
+  qt/roicoin/settings/forms/settingswalletoptionswidget.ui \
+  qt/roicoin/settings/forms/settingswalletrepairwidget.ui \
+  qt/roicoin/settings/forms/settingswidget.ui \
+  qt/roicoin/forms/welcomecontentwidget.ui \
+  qt/roicoin/forms/splash.ui
+
+QT_MOC_CPP = \
+  qt/moc_addressbookpage.cpp \
+  qt/moc_addresstablemodel.cpp \
+  qt/moc_askpassphrasedialog.cpp \
+  qt/moc_bantablemodel.cpp \
+  qt/moc_bitcoinaddressvalidator.cpp \
+  qt/moc_bitcoinamountfield.cpp \
+  qt/roicoin/moc_roicoingui.cpp \
+  qt/moc_bitcoinunits.cpp \
+  qt/moc_blockexplorer.cpp \
+  qt/moc_clientmodel.cpp \
+  qt/moc_coincontroldialog.cpp \
+  qt/moc_coincontroltreewidget.cpp \
+  qt/moc_csvmodelwriter.cpp \
+  qt/moc_editaddressdialog.cpp \
+  qt/moc_governancepage.cpp \
+  qt/moc_guiutil.cpp \
+  qt/moc_intro.cpp \
+  qt/moc_macdockiconhandler.cpp \
+  qt/moc_macnotificationhandler.cpp \
+  qt/moc_notificator.cpp \
+  qt/moc_openuridialog.cpp \
+  qt/moc_optionsdialog.cpp \
+  qt/moc_optionsmodel.cpp \
+  qt/moc_peertablemodel.cpp \
+  qt/moc_paymentserver.cpp \
+  qt/moc_qvalidatedlineedit.cpp \
+  qt/moc_qvaluecombobox.cpp \
+  qt/moc_proposalframe.cpp \
+  qt/moc_recentrequeststablemodel.cpp \
+  qt/moc_rpcconsole.cpp \
+  qt/moc_splashscreen.cpp \
+  qt/moc_trafficgraphwidget.cpp \
+  qt/moc_transactiondesc.cpp \
+  qt/moc_transactionfilterproxy.cpp \
+  qt/moc_transactiontablemodel.cpp \
+  qt/moc_utilitydialog.cpp \
+  qt/moc_walletmodel.cpp \
+  qt/roicoin/moc_loadingdialog.cpp \
+  qt/moc_zroicontroldialog.cpp \
+  qt/roicoin/moc_pwidget.cpp \
+  qt/roicoin/moc_snackbar.cpp \
+  qt/roicoin/moc_navmenuwidget.cpp \
+  qt/roicoin/moc_lockunlock.cpp \
+  qt/roicoin/moc_expandablebutton.cpp \
+  qt/roicoin/moc_furabstractlistitemdelegate.cpp \
+  qt/roicoin/moc_receivedialog.cpp \
+  qt/roicoin/moc_walletpassworddialog.cpp \
+  qt/roicoin/moc_pfborderimage.cpp \
+  qt/roicoin/moc_topbar.cpp \
+  qt/roicoin/moc_txrow.cpp \
+  qt/roicoin/moc_dashboardwidget.cpp \
+  qt/roicoin/moc_coincontrolroiwidget.cpp \
+  qt/roicoin/moc_addresslabelrow.cpp \
+  qt/roicoin/moc_contactdropdownrow.cpp \
+  qt/roicoin/moc_mninfodialog.cpp \
+  qt/roicoin/moc_optionbutton.cpp \
+  qt/roicoin/moc_coldstakingmodel.cpp \
+  qt/roicoin/moc_mnmodel.cpp \
+  qt/roicoin/moc_masternodewizarddialog.cpp \
+  qt/roicoin/moc_mnrow.cpp \
+  qt/roicoin/moc_masternodeswidget.cpp \
+  qt/roicoin/moc_myaddressrow.cpp \
+  qt/roicoin/moc_csrow.cpp \
+  qt/roicoin/moc_contactsdropdown.cpp \
+  qt/roicoin/moc_sendchangeaddressdialog.cpp \
+  qt/roicoin/moc_sendconfirmdialog.cpp \
+  qt/roicoin/moc_sendcustomfeedialog.cpp \
+  qt/roicoin/moc_sendchangeaddressdialog.cpp \
+  qt/roicoin/moc_sendmultirow.cpp \
+  qt/roicoin/moc_send.cpp \
+  qt/roicoin/moc_addnewaddressdialog.cpp \
+  qt/roicoin/moc_addnewcontactdialog.cpp \
+  qt/roicoin/moc_requestdialog.cpp \
+  qt/roicoin/moc_receivewidget.cpp \
+  qt/roicoin/moc_tooltipmenu.cpp \
+  qt/roicoin/moc_addresseswidget.cpp \
+  qt/roicoin/moc_defaultdialog.cpp \
+  qt/roicoin/moc_denomgenerationdialog.cpp \
+  qt/roicoin/moc_privacywidget.cpp \
+  qt/roicoin/moc_coldstakingwidget.cpp \
+  qt/roicoin/settings/moc_settingsbackupwallet.cpp \
+  qt/roicoin/settings/moc_settingsbittoolwidget.cpp \
+  qt/roicoin/settings/moc_settingsconsolewidget.cpp \
+  qt/roicoin/settings/moc_settingsdisplayoptionswidget.cpp \
+  qt/roicoin/settings/moc_settingsfaqwidget.cpp \
+  qt/roicoin/settings/moc_settingsinformationwidget.cpp \
+  qt/roicoin/settings/moc_settingsmainoptionswidget.cpp \
+  qt/roicoin/settings/moc_settingsmultisenddialog.cpp \
+  qt/roicoin/settings/moc_settingsmultisendwidget.cpp \
+  qt/roicoin/settings/moc_settingssignmessagewidgets.cpp \
+  qt/roicoin/settings/moc_settingswalletoptionswidget.cpp \
+  qt/roicoin/settings/moc_settingswalletrepairwidget.cpp \
+  qt/roicoin/settings/moc_settingswidget.cpp \
+  qt/roicoin/moc_welcomecontentwidget.cpp \
+  qt/roicoin/moc_splash.cpp
+
+BITCOIN_MM = \
+  qt/macdockiconhandler.mm \
+  qt/macnotificationhandler.mm
+
+QT_MOC = \
+  qt/roicoin.moc \
+  qt/bitcoinamountfield.moc \
+  qt/intro.moc \
+  qt/rpcconsole.moc \
+  qt/roicoin/settings/moc_settingsconsolewidget.cpp
+
+QT_QRC_CPP = qt/qrc_roicoin.cpp
+QT_QRC = qt/roicoin.qrc
+QT_QRC_LOCALE_CPP = qt/qrc_roicoin_locale.cpp
+QT_QRC_LOCALE = qt/roicoin_locale.qrc
+
+PROTOBUF_CC = qt/paymentrequest.pb.cc
+PROTOBUF_H = qt/paymentrequest.pb.h
+PROTOBUF_PROTO = qt/paymentrequest.proto
+
+BITCOIN_QT_H = \
+  qt/addressbookpage.h \
+  qt/addresstablemodel.h \
+  qt/askpassphrasedialog.h \
+  qt/bantablemodel.h \
+  qt/bitcoinaddressvalidator.h \
+  qt/bitcoinamountfield.h \
+  qt/roicoin/roicoingui.h \
+  qt/bitcoinunits.h \
+  qt/blockexplorer.h \
+  qt/clientmodel.h \
+  qt/coincontroldialog.h \
+  qt/coincontroltreewidget.h \
+  qt/csvmodelwriter.h \
+  qt/editaddressdialog.h \
+  qt/governancepage.h \
+  qt/guiconstants.h \
+  qt/guiutil.h \
+  qt/intro.h \
+  qt/macdockiconhandler.h \
+  qt/macnotificationhandler.h \
+  qt/networkstyle.h \
+  qt/notificator.h \
+  qt/openuridialog.h \
+  qt/optionsdialog.h \
+  qt/optionsmodel.h \
+  qt/paymentrequestplus.h \
+  qt/paymentserver.h \
+  qt/peertablemodel.h \
+  qt/platformstyle.h \
+  qt/proposalframe.h \
+  qt/qvalidatedlineedit.h \
+  qt/qvaluecombobox.h \
+  qt/recentrequeststablemodel.h \
+  qt/rpcconsole.h \
+  qt/splashscreen.h \
+  qt/trafficgraphwidget.h \
+  qt/transactiondesc.h \
+  qt/transactionfilterproxy.h \
+  qt/transactionrecord.h \
+  qt/transactiontablemodel.h \
+  qt/utilitydialog.h \
+  qt/walletmodel.h \
+  qt/walletmodeltransaction.h \
+  qt/roicoin/prunnable.h \
+  qt/roicoin/pfborderimage.h \
+  qt/roicoin/loadingdialog.h \
+  qt/winshutdownmonitor.h \
+  qt/zroicontroldialog.h \
+  qt/roicoin/pwidget.h \
+  qt/roicoin/guitransactionsutils.h \
+  qt/roicoin/snackbar.h \
+  qt/roicoin/navmenuwidget.h \
+  qt/roicoin/lockunlock.h \
+  qt/roicoin/receivedialog.h \
+  qt/roicoin/furlistrow.h \
+  qt/roicoin/furabstractlistitemdelegate.h \
+  qt/roicoin/txviewholder.h \
+  qt/roicoin/qtutils.h \
+  qt/roicoin/expandablebutton.h \
+  qt/roicoin/walletpassworddialog.h \
+  qt/roicoin/topbar.h \
+  qt/roicoin/txrow.h \
+  qt/roicoin/addressholder.h \
+  qt/roicoin/addressfilterproxymodel.h \
+  qt/roicoin/dashboardwidget.h \
+  qt/roicoin/coincontrolroiwidget.h \
+  qt/roicoin/addresslabelrow.h \
+  qt/roicoin/contactdropdownrow.h \
+  qt/roicoin/mninfodialog.h \
+  qt/roicoin/optionbutton.h \
+  qt/roicoin/coldstakingmodel.h \
+  qt/roicoin/mnmodel.h \
+  qt/roicoin/masternodewizarddialog.h \
+  qt/roicoin/mnrow.h \
+  qt/roicoin/masternodeswidget.h \
+  qt/roicoin/myaddressrow.h \
+  qt/roicoin/csrow.h \
+  qt/roicoin/contactsdropdown.h \
+  qt/roicoin/sendchangeaddressdialog.h \
+  qt/roicoin/sendconfirmdialog.h \
+  qt/roicoin/sendcustomfeedialog.h \
+  qt/roicoin/sendchangeaddressdialog.h \
+  qt/roicoin/sendmultirow.h \
+  qt/roicoin/send.h \
+  qt/roicoin/addnewaddressdialog.h \
+  qt/roicoin/addnewcontactdialog.h \
+  qt/roicoin/requestdialog.h \
+  qt/roicoin/receivewidget.h \
+  qt/roicoin/tooltipmenu.h \
+  qt/roicoin/addresseswidget.h \
+  qt/roicoin/defaultdialog.h \
+  qt/roicoin/denomgenerationdialog.h \
+  qt/roicoin/privacywidget.h \
+  qt/roicoin/coldstakingwidget.h \
+  qt/roicoin/settings/settingsbackupwallet.h \
+  qt/roicoin/settings/settingsbittoolwidget.h \
+  qt/roicoin/settings/settingsconsolewidget.h \
+  qt/roicoin/settings/settingsdisplayoptionswidget.h \
+  qt/roicoin/settings/settingsfaqwidget.h \
+  qt/roicoin/settings/settingsinformationwidget.h \
+  qt/roicoin/settings/settingsmainoptionswidget.h \
+  qt/roicoin/settings/settingsmultisenddialog.h \
+  qt/roicoin/settings/settingsmultisendwidget.h \
+  qt/roicoin/settings/settingssignmessagewidgets.h \
+  qt/roicoin/settings/settingswalletoptionswidget.h \
+  qt/roicoin/settings/settingswalletrepairwidget.h \
+  qt/roicoin/settings/settingswidget.h \
+  qt/roicoin/welcomecontentwidget.h \
+  qt/roicoin/splash.h
+
+RES_ICONS = \
+  qt/res/icons/add.png \
+  qt/res/icons/address-book.png \
+  qt/res/icons/automint_active.png \
+  qt/res/icons/automint_inactive.png \
+  qt/res/icons/bitcoin.ico \
+  qt/res/icons/bitcoin.png \
+  qt/res/icons/bitcoin_testnet.ico \
+  qt/res/icons/bitcoin_testnet.png \
+  qt/res/icons/bitcoin_regtest.png \
+  qt/res/icons/browse.png \
+  qt/res/icons/clock1.png \
+  qt/res/icons/clock2.png \
+  qt/res/icons/clock3.png \
+  qt/res/icons/clock4.png \
+  qt/res/icons/clock5.png \
+  qt/res/icons/configure.png \
+  qt/res/icons/connect0_16.png \
+  qt/res/icons/connect1_16.png \
+  qt/res/icons/connect2_16.png \
+  qt/res/icons/connect3_16.png \
+  qt/res/icons/connect4_16.png \
+  qt/res/icons/debugwindow.png \
+  qt/res/icons/edit.png \
+  qt/res/icons/editcopy.png \
+  qt/res/icons/editpaste.png \
+  qt/res/icons/explorer.png \
+  qt/res/icons/export.png \
+  qt/res/icons/eye.png \
+  qt/res/icons/eye_minus.png \
+  qt/res/icons/eye_plus.png \
+  qt/res/icons/filesave.png \
+  qt/res/icons/history.png \
+  qt/res/icons/key.png \
+  qt/res/icons/lock_closed.png \
+  qt/res/icons/lock_open.png \
+  qt/res/icons/masternodes.png \
+  qt/res/icons/onion.png \
+  qt/res/icons/overview.png \
+  qt/res/icons/qrcode.png \
+  qt/res/icons/quit.png \
+  qt/res/icons/receive.png \
+  qt/res/icons/receive_dark.png \
+  qt/res/icons/privacy.png \
+  qt/res/icons/remove.png \
+  qt/res/icons/send.png \
+  qt/res/icons/send_dark.png \
+  qt/res/icons/governance.png \
+  qt/res/icons/governance_dark.png \
+  qt/res/icons/staking_active.png \
+  qt/res/icons/staking_inactive.png \
+  qt/res/icons/synced.png \
+  qt/res/icons/trade.png \
+  qt/res/icons/transaction0.png \
+  qt/res/icons/transaction2.png \
+  qt/res/icons/transaction_conflicted.png \
+  qt/res/icons/tx_inout.png \
+  qt/res/icons/tx_input.png \
+  qt/res/icons/tx_output.png \
+  qt/res/icons/tx_mined.png \
+  qt/res/icons/ic-transaction-received.png \
+  qt/res/icons/ic-transaction-mint.png \
+  qt/res/icons/ic-transaction-sent.png \
+  qt/res/icons/ic-transaction-staked.png \
+  qt/res/icons/unit_roicoin.png \
+  qt/res/icons/unit_mroicoin.png \
+  qt/res/icons/unit_uroicoin.png \
+  qt/res/icons/unit_troicoin.png \
+  qt/res/icons/unit_tmroicoin.png \
+  qt/res/icons/unit_turoicoin.png \
+  qt/res/icons/yesvote.png \
+  qt/res/icons/novote.png \
+  qt/res/icons/abstainvote.png \
+  qt/roicoin/res/img/bg-dashboard-banner.png \
+  qt/roicoin/res/img/bg-multi-number-dark.png \
+  qt/roicoin/res/img/ic-check-locked.png \
+  qt/roicoin/res/img/ic-nav-address.png \
+  qt/roicoin/res/img/ic-update.png \
+  qt/roicoin/res/img/bg-multi-number.png \
+  qt/roicoin/res/img/ic-check-mint-off.png \
+  qt/roicoin/res/img/ic-nav-cold-staking.png \
+  qt/roicoin/res/img/ic-nav-cold-staking-active.png \
+  qt/roicoin/res/img/ic-nav-dashboard-active.png \
+  qt/roicoin/res/img/ic-wallet-status-locked.png \
+  qt/roicoin/res/img/bg-splash.png \
+  qt/roicoin/res/img/bg-splash.png \
+  qt/roicoin/res/img/ic-check-mint.png \
+  qt/roicoin/res/img/ic-nav-dashboard-hover.png \
+  qt/roicoin/res/img/ic-wallet-status-staking.png \
+  qt/roicoin/res/img/ic-check-peers-off.png \
+  qt/roicoin/res/img/ic-nav-dashboard.png \
+  qt/roicoin/res/img/ic-wallet-status-unlocked.png \
+  qt/roicoin/res/img/ic-check-peers.png \
+  qt/roicoin/res/img/ic-nav-master-active.png \
+  qt/roicoin/res/img/ic-watch-password-white.png \
+  qt/roicoin/res/img/bg-welcome-container.png \
+  qt/roicoin/res/img/ic-check-staking-off.png \
+  qt/roicoin/res/img/ic-nav-master-hover.png \
+  qt/roicoin/res/img/ic-watch-password.png \
+  qt/roicoin/res/img/bg-welcome.png \
+  qt/roicoin/res/img/ic-check-staking.png \
+  qt/roicoin/res/img/ic-nav-master.png \
+  qt/roicoin/res/img/btn-radio-active.png \
+  qt/roicoin/res/img/ic-check-sync-off.png \
+  qt/roicoin/res/img/ic-nav-privacy-active.png \
+  qt/roicoin/res/img/img-empty-contacts.png \
+  qt/roicoin/res/img/btn-radio-off.png \
+  qt/roicoin/res/img/ic-check-sync.png \
+  qt/roicoin/res/img/ic-nav-privacy-hover.png \
+  qt/roicoin/res/img/img-empty-dark-contacts.png \
+  qt/roicoin/res/img/ic-contact-arrow-down.png \
+  qt/roicoin/res/img/ic-contact-arrow-down-white.png \
+  qt/roicoin/res/img/ic-check-sync.png \
+  qt/roicoin/res/img/ic-check-faq.png \
+  qt/roicoin/res/img/ic-nav-privacy.png \
+  qt/roicoin/res/img/img-empty-dark-error.png \
+  qt/roicoin/res/img/ic-add-label.png \
+  qt/roicoin/res/img/ic-pending.png \
+  qt/roicoin/res/img/ic-check-theme-dark.png \
+  qt/roicoin/res/img/ic-nav-receive-active.png \
+  qt/roicoin/res/img/img-empty-dark-masternode.png \
+  qt/roicoin/res/img/ic-add-liliac.png \
+  qt/roicoin/res/img/ic-check-theme-light.png \
+  qt/roicoin/res/img/ic-nav-receive-hover.png \
+  qt/roicoin/res/img/img-empty-dark-multisend.png \
+  qt/roicoin/res/img/ic-add-purple.png \
+  qt/roicoin/res/img/ic-check-white.png \
+  qt/roicoin/res/img/ic-nav-receive.png \
+  qt/roicoin/res/img/img-empty-dark-peers.png \
+  qt/roicoin/res/img/ic-add.png \
+  qt/roicoin/res/img/ic-check.png \
+  qt/roicoin/res/img/ic-nav-send-active.png \
+  qt/roicoin/res/img/img-empty-dark-staking-off.png \
+  qt/roicoin/res/img/img-empty-dark-staking-on.png \
+  qt/roicoin/res/img/ic-address-book-grey.png \
+  qt/roicoin/res/img/ic-chevron-left.png \
+  qt/roicoin/res/img/ic-nav-send-hover.png \
+  qt/roicoin/res/img/img-empty-dark-transactions.png \
+  qt/roicoin/res/img/ic-address-book-white.png \
+  qt/roicoin/res/img/ic-chevron-right.png \
+  qt/roicoin/res/img/ic-nav-send.png \
+  qt/roicoin/res/img/img-empty-error.png \
+  qt/roicoin/res/img/ic-address-book.png \
+  qt/roicoin/res/img/ic-clear-liliac.png \
+  qt/roicoin/res/img/ic-nav-settings-active.png \
+  qt/roicoin/res/img/img-empty-masternode.png \
+  qt/roicoin/res/img/ic-address-send-white.png \
+  qt/roicoin/res/img/ic-clear-purple.png \
+  qt/roicoin/res/img/ic-nav-settings-hover.png \
+  qt/roicoin/res/img/img-empty-multisend.png \
+  qt/roicoin/res/img/ic-address-send.png \
+  qt/roicoin/res/img/ic-close-white.png \
+  qt/roicoin/res/img/ic-nav-settings.png \
+  qt/roicoin/res/img/img-empty-peers.png \
+  qt/roicoin/res/img/img-empty-privacy.png \
+  qt/roicoin/res/img/img-empty-privacy-dark.png \
+  qt/roicoin/res/img/ic-arrow-drop-down-white.png \
+  qt/roicoin/res/img/ic-close.png \
+  qt/roicoin/res/img/ic-radio-liliac-on.png \
+  qt/roicoin/res/img/img-empty-staking-off.png \
+  qt/roicoin/res/img/ic-arrow-drop-down.png \
+  qt/roicoin/res/img/ic-coin-roi.png \
+  qt/roicoin/res/img/ic-receive-off.png \
+  qt/roicoin/res/img/img-empty-staking-on.png \
+  qt/roicoin/res/img/ic-arrow-drop-up-white.png \
+  qt/roicoin/res/img/ic-coin-zroi.png \
+  qt/roicoin/res/img/ic-receive-on.png \
+  qt/roicoin/res/img/img-empty-transactions.png \
+  qt/roicoin/res/img/ic-arrow-drop-up.png \
+  qt/roicoin/res/img/ic-coin-zroi.png \
+  qt/roicoin/res/img/ic-received.png \
+  qt/roicoin/res/img/img-logo-roicoin.png \
+  qt/roicoin/res/img/ic-arrow-drop-white-down.png \
+  qt/roicoin/res/img/ic-combo-box.png \
+  qt/roicoin/res/img/ic-send.png \
+  qt/roicoin/res/img/img-logo-roicoin@2x.png \
+  qt/roicoin/res/img/ic-arrow-purple-down.png \
+  qt/roicoin/res/img/ic-connect.png \
+  qt/roicoin/res/img/ic-submenu-lock.png \
+  qt/roicoin/res/img/img-logo-roicoin@3x.png \
+  qt/roicoin/res/img/img-logo-roicoin.png \
+  qt/roicoin/res/img/ic-arrow-right-white.png \
+  qt/roicoin/res/img/ic-arrow-left-white.png \
+  qt/roicoin/res/img/ic-arrow-left.png \
+  qt/roicoin/res/img/ic-copy-liliac.png \
+  qt/roicoin/res/img/ic-submenu-staking.png \
+  qt/roicoin/res/img/img-nav-logo-roicoin.png \
+  qt/roicoin/res/img/ic-arrow-right.png \
+  qt/roicoin/res/img/ic-copy.png \
+  qt/roicoin/res/img/ic-copy-big.png \
+  qt/roicoin/res/img/ic-copy-big-white.png \
+  qt/roicoin/res/img/ic-submenu-unlock.png \
+  qt/roicoin/res/img/img-nav-logo.png \
+  qt/roicoin/res/img/ic-arrow-white-left.png \
+  qt/roicoin/res/img/ic-exit.png \
+  qt/roicoin/res/img/ic-switch-liliac-on.png \
+  qt/roicoin/res/img/img-nav-logo.png \
+  qt/roicoin/res/img/ic-arrow-white-right.png \
+  qt/roicoin/res/img/ic-expand.png \
+  qt/roicoin/res/img/ic-switch-off.png \
+  qt/roicoin/res/img/img-qr-test-big.png \
+  qt/roicoin/res/img/ic-check-active.png \
+  qt/roicoin/res/img/ic-folder.png \
+  qt/roicoin/res/img/ic-switch-on.png \
+  qt/roicoin/res/img/img-qr-test.png \
+  qt/roicoin/res/img/ic-check-box.png \
+  qt/roicoin/res/img/ic-check-box-dark-active.png \
+  qt/roicoin/res/img/ic-check-box-indeterminate.png \
+  qt/roicoin/res/img/ic-check-box-liliac-indeterminate.png \
+  qt/roicoin/res/img/ic-label-liliac.png \
+  qt/roicoin/res/img/ic-transaction-warning.png \
+  qt/roicoin/res/img/ic-transaction-mint.png \
+  qt/roicoin/res/img/ic-transaction-mint-inactive.png \
+  qt/roicoin/res/img/ic-check-cold-staking.png \
+  qt/roicoin/res/img/ic-check-cold-staking-off.png \
+  qt/roicoin/res/img/ic-check-cold-staking-enabled.png \
+  qt/roicoin/res/img/dark/ic-transaction-cs-contract.png \
+  qt/roicoin/res/img/dark/ic-transaction-cs-contract-inactive.png \
+  qt/roicoin/res/img/img-qr.png \
+  qt/roicoin/res/img/ic-check-connect-off.png \
+  qt/roicoin/res/img/ic-label.png \
+  qt/roicoin/res/img/ic-transaction-received.png \
+  qt/roicoin/res/img/dark/ic-transaction-received.png \
+  qt/roicoin/res/img/dark/ic-transaction-warning.png \
+  qt/roicoin/res/img/dark/ic-transaction-mint.png \
+  qt/roicoin/res/img/dark/ic-transaction-mint-inactive.png \
+  qt/roicoin/res/img/ic-transaction-received-inactive.png \
+  qt/roicoin/res/img/dark/ic-transaction-received-inactive.png \
+  qt/roicoin/res/img/img-welcome-step1.png \
+  qt/roicoin/res/img/ic-check-connect.png \
+  qt/roicoin/res/img/ic-menu-hover.png \
+  qt/roicoin/res/img/ic-transaction-sent.png \
+  qt/roicoin/res/img/ic-transaction-sent-inactive.png \
+  qt/roicoin/res/img/dark/ic-transaction-sent.png \
+  qt/roicoin/res/img/dark/ic-transaction-sent-inactive.png \
+  qt/roicoin/res/img/img-welcome-step2.png \
+  qt/roicoin/res/img/ic-check-dark.png \
+  qt/roicoin/res/img/ic-mint.png \
+  qt/roicoin/res/img/ic-transaction-staked.png \
+  qt/roicoin/res/img/ic-transaction-staked-inactive.png \
+  qt/roicoin/res/img/dark/ic-transaction-staked.png \
+  qt/roicoin/res/img/dark/ic-transaction-staked-inactive.png \
+  qt/roicoin/res/img/img-welcome-step3.png \
+  qt/roicoin/res/img/ic-check-liliac-on.png \
+  qt/roicoin/res/img/ic-nav-address-active.png \
+  qt/roicoin/res/img/ic-unlock-staking.png \
+  qt/roicoin/res/img/img-welcome-step4.png \
+  qt/roicoin/res/img/ic-check-locked-off.png \
+  qt/roicoin/res/img/ic-nav-address-hover.png \
+  qt/roicoin/res/img/ic-update-liliac.png \
+  qt/roicoin/res/img/ic-arrow-drop-down-purple.png \
+  qt/roicoin/res/img/ic-arrow-drop-up-purple.png \
+  qt/roicoin/res/img/ic-check-liliac-indeterminate.png \
+  qt/roicoin/res/img/ic-check-box-liliac-indeterminate.png \
+  qt/roicoin/res/img/ic-transaction-stake-delegated.png \
+  qt/roicoin/res/img/ic-transaction-stake-delegated-inactive.png \
+  qt/roicoin/res/img/ic-transaction-stake-hot.png \
+  qt/roicoin/res/img/ic-transaction-stake-hot-inactive.png \
+  qt/roicoin/res/img/dark/ic-transaction-stake-hot.png \
+  qt/roicoin/res/img/dark/ic-transaction-stake-hot-inactive.png \
+  qt/roicoin/res/img/dark/ic-transaction-stake-delegated.png \
+  qt/roicoin/res/img/dark/ic-transaction-stake-delegated-inactive.png \
+  qt/roicoin/res/img/ic-transaction-cs-contract.png \
+  qt/roicoin/res/img/ic-transaction-cs-contract-inactive.png \
+  qt/roicoin/res/img/ic-check-box-indeterminate.png \
+  qt/roicoin/res/img/ani-loading-dark.gif \
+  qt/roicoin/res/img/ani-loading.gif
+
+
+
+BITCOIN_QT_BASE_CPP = \
+  qt/bantablemodel.cpp \
+  qt/bitcoinaddressvalidator.cpp \
+  qt/bitcoinamountfield.cpp \
+  qt/roicoin/roicoingui.cpp \
+  qt/bitcoinunits.cpp \
+  qt/blockexplorer.cpp \
+  qt/clientmodel.cpp \
+  qt/csvmodelwriter.cpp \
+  qt/guiutil.cpp \
+  qt/intro.cpp \
+  qt/networkstyle.cpp \
+  qt/notificator.cpp \
+  qt/optionsdialog.cpp \
+  qt/optionsmodel.cpp \
+  qt/peertablemodel.cpp \
+  qt/platformstyle.cpp \
+  qt/qvalidatedlineedit.cpp \
+  qt/qvaluecombobox.cpp \
+  qt/rpcconsole.cpp \
+  qt/splashscreen.cpp \
+  qt/trafficgraphwidget.cpp \
+  qt/utilitydialog.cpp
+
+BITCOIN_QT_WINDOWS_CPP = qt/winshutdownmonitor.cpp
+
+BITCOIN_QT_WALLET_CPP = \
+  qt/addressbookpage.cpp \
+  qt/addresstablemodel.cpp \
+  qt/askpassphrasedialog.cpp \
+  qt/blockexplorer.cpp \
+  qt/coincontroldialog.cpp \
+  qt/coincontroltreewidget.cpp \
+  qt/editaddressdialog.cpp \
+  qt/governancepage.cpp \
+  qt/openuridialog.cpp \
+  qt/paymentrequestplus.cpp \
+  qt/paymentserver.cpp \
+  qt/proposalframe.cpp \
+  qt/recentrequeststablemodel.cpp \
+  qt/transactiondesc.cpp \
+  qt/transactionfilterproxy.cpp \
+  qt/transactionrecord.cpp \
+  qt/transactiontablemodel.cpp \
+  qt/walletmodel.cpp \
+  qt/walletmodeltransaction.cpp \
+  qt/roicoin/loadingdialog.cpp \
+  qt/zroicontroldialog.cpp \
+  qt/roicoin/pwidget.cpp \
+  qt/roicoin/guitransactionsutils.cpp \
+  qt/roicoin/snackbar.cpp \
+  qt/roicoin/navmenuwidget.cpp \
+  qt/roicoin/lockunlock.cpp \
+  qt/roicoin/receivedialog.cpp \
+  qt/roicoin/furabstractlistitemdelegate.cpp \
+  qt/roicoin/txviewholder.cpp \
+  qt/roicoin/qtutils.cpp \
+  qt/roicoin/expandablebutton.cpp \
+  qt/roicoin/walletpassworddialog.cpp \
+  qt/roicoin/topbar.cpp \
+  qt/roicoin/txrow.cpp \
+  qt/roicoin/addressholder.cpp \
+  qt/roicoin/addressfilterproxymodel.cpp \
+  qt/roicoin/dashboardwidget.cpp \
+  qt/roicoin/coincontrolroiwidget.cpp \
+  qt/roicoin/addresslabelrow.cpp \
+  qt/roicoin/contactdropdownrow.cpp \
+  qt/roicoin/contactsdropdown.cpp \
+  qt/roicoin/optionbutton.cpp \
+  qt/roicoin/mninfodialog.cpp \
+  qt/roicoin/coldstakingmodel.cpp \
+  qt/roicoin/mnmodel.cpp \
+  qt/roicoin/masternodewizarddialog.cpp \
+  qt/roicoin/mnrow.cpp \
+  qt/roicoin/masternodeswidget.cpp \
+  qt/roicoin/myaddressrow.cpp \
+  qt/roicoin/csrow.cpp \
+  qt/roicoin/sendchangeaddressdialog.cpp \
+  qt/roicoin/sendconfirmdialog.cpp \
+  qt/roicoin/sendcustomfeedialog.cpp \
+  qt/roicoin/sendchangeaddressdialog.cpp \
+  qt/roicoin/sendmultirow.cpp \
+  qt/roicoin/send.cpp \
+  qt/roicoin/addnewaddressdialog.cpp \
+  qt/roicoin/addnewcontactdialog.cpp \
+  qt/roicoin/requestdialog.cpp \
+  qt/roicoin/receivewidget.cpp \
+  qt/roicoin/tooltipmenu.cpp \
+  qt/roicoin/addresseswidget.cpp \
+  qt/roicoin/defaultdialog.cpp \
+  qt/roicoin/denomgenerationdialog.cpp \
+  qt/roicoin/privacywidget.cpp \
+  qt/roicoin/coldstakingwidget.cpp \
+  qt/roicoin/settings/settingsbackupwallet.cpp \
+  qt/roicoin/settings/settingsbittoolwidget.cpp \
+  qt/roicoin/settings/settingsconsolewidget.cpp \
+  qt/roicoin/settings/settingsdisplayoptionswidget.cpp \
+  qt/roicoin/settings/settingsfaqwidget.cpp \
+  qt/roicoin/settings/settingsinformationwidget.cpp \
+  qt/roicoin/settings/settingsmainoptionswidget.cpp \
+  qt/roicoin/settings/settingsmultisenddialog.cpp \
+  qt/roicoin/settings/settingsmultisendwidget.cpp \
+  qt/roicoin/settings/settingssignmessagewidgets.cpp \
+  qt/roicoin/settings/settingswalletoptionswidget.cpp \
+  qt/roicoin/settings/settingswalletrepairwidget.cpp \
+  qt/roicoin/settings/settingswidget.cpp \
+  qt/roicoin/welcomecontentwidget.cpp \
+  qt/roicoin/splash.cpp
+
+
+BITCOIN_QT_CPP = $(BITCOIN_QT_BASE_CPP)
+if TARGET_WINDOWS
+BITCOIN_QT_CPP += $(BITCOIN_QT_WINDOWS_CPP)
+endif
+if ENABLE_WALLET
+BITCOIN_QT_CPP += $(BITCOIN_QT_WALLET_CPP)
+endif
+
+RES_IMAGES = \
+  qt/res/images/about.png \
+  qt/res/images/splash.png \
+  qt/res/images/splash_testnet.png \
+  qt/res/images/splash_regtest.png \
+  qt/res/images/roicoin_logo_horizontal.png \
+  qt/res/images/downArrow_dark.png \
+  qt/res/images/downArrow_small_dark.png \
+  qt/res/images/downArrow_small.png \
+  qt/res/images/upArrow_small_dark.png \
+  qt/res/images/upArrow_small.png \
+  qt/res/images/leftArrow_small_dark.png \
+  qt/res/images/rightArrow_small_dark.png \
+  qt/res/images/qtreeview_selected.png
+
+RES_CSS = \
+  qt/res/css/default.css \
+  qt/roicoin/res/css/style_dark.css \
+  qt/roicoin/res/css/style_light.css
+
+RES_MOVIES = $(wildcard $(srcdir)/qt/res/movies/spinner-*.png)
+
+BITCOIN_RC = qt/res/roicoin-qt-res.rc
+
+BITCOIN_QT_INCLUDES = -I$(builddir)/qt -I$(srcdir)/qt -I$(srcdir)/qt/forms \
+  -I$(builddir)/qt/forms
+
+qt_libbitcoinqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+  $(QT_INCLUDES) $(QT_DBUS_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS) $(SVG_CFLAGS) $(CHARTS_CFLAGS)
+qt_libbitcoinqt_a_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+qt_libbitcoinqt_a_OBJCXXFLAGS = $(AM_OBJCXXFLAGS) $(QT_PIE_FLAGS)
+
+qt_libbitcoinqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
+  $(QT_QRC) $(QT_QRC_LOCALE) $(QT_TS) $(PROTOBUF_PROTO) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS) $(RES_MOVIES)
+
+nodist_qt_libbitcoinqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
+  $(PROTOBUF_H) $(QT_QRC_CPP) $(QT_QRC_LOCALE_CPP)
+
+# forms/foo.h -> forms/ui_foo.h
+QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:.ui=.h))))
+
+# Most files will depend on the forms and moc files as includes. Generate them
+# before anything else.
+$(QT_MOC): $(QT_FORMS_H)
+$(qt_libbitcoinqt_a_OBJECTS) $(qt_roicoin_qt_OBJECTS) : | $(QT_MOC)
+
+#Generating these with a half-written protobuf header leads to wacky results.
+#This makes sure it's done.
+$(QT_MOC): $(PROTOBUF_H)
+$(QT_MOC_CPP): $(PROTOBUF_H)
+
+# roicoin-qt binary #
+qt_roicoin_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+  $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS) $(SVG_CFLAGS) $(CHARTS_CFLAGS)
+qt_roicoin_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+
+qt_roicoin_qt_SOURCES = qt/roicoin.cpp
+if TARGET_DARWIN
+  qt_roicoin_qt_SOURCES += $(BITCOIN_MM)
+endif
+if TARGET_WINDOWS
+  qt_roicoin_qt_SOURCES += $(BITCOIN_RC)
+endif
+qt_roicoin_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
+if ENABLE_WALLET
+qt_roicoin_qt_LDADD += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
+endif
+if ENABLE_ZMQ
+qt_roicoin_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+endif
+qt_roicoin_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBBITCOIN_ZEROCOIN) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
+  $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(SVG_LIBS) $(CHARTS_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
+  $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+qt_roicoin_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qt_roicoin_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
+
+#locale/foo.ts -> locale/foo.qm
+QT_QM=$(QT_TS:.ts=.qm)
+
+SECONDARY: $(QT_QM)
+
+$(srcdir)/qt/roicoinstrings.cpp: $(libbitcoin_server_a_SOURCES) $(libbitcoin_wallet_a_SOURCES) $(libbitcoin_common_a_SOURCES) $(libbitcoin_zmq_a_SOURCES) $(libbitcoin_util_a_SOURCES)
+	@test -n $(XGETTEXT) || echo "xgettext is required for updating translations"
+	$(AM_V_GEN) cd $(srcdir); XGETTEXT=$(XGETTEXT) PACKAGE_NAME="$(PACKAGE_NAME)" $(PYTHON) ../share/qt/extract_strings_qt.py $^
+
+translate: $(srcdir)/qt/roicoinstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_BASE_CPP) qt/roicoin.cpp $(BITCOIN_QT_WINDOWS_CPP) $(BITCOIN_QT_WALLET_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
+	@test -n $(LUPDATE) || echo "lupdate is required for updating translations"
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts $(srcdir)/qt/locale/roicoin_en.ts
+
+$(QT_QRC_LOCALE_CPP): $(QT_QRC_LOCALE) $(QT_QM)
+	@test -f $(RCC)
+	@cp -f $< $(@D)/temp_$(<F)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name roicoin_locale $(@D)/temp_$(<F) | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+	@rm $(@D)/temp_$(<F)
+
+$(QT_QRC_CPP): $(QT_QRC) $(QT_FORMS_H) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS) $(RES_MOVIES) $(PROTOBUF_H)
+	@test -f $(RCC)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name roicoin $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno qt/temp_roicoin_locale.qrc
+
+CLEANFILES += $(CLEAN_QT)
+
+roicoin_qt_clean: FORCE
+	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_roicoin_qt_OBJECTS) qt/roicoin-qt$(EXEEXT) $(LIBBITCOINQT)
+
+roicoin_qt : qt/roicoin-qt$(EXEEXT)
+
+ui_%.h: %.ui
+	@test -f $(UIC)
+	@$(MKDIR_P) $(@D)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(UIC) -o $@ $< || (echo "Error creating $@"; false)
+
+%.moc: %.cpp
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(MOC) $(DEFAULT_INCLUDES) $(QT_INCLUDES) $(MOC_DEFS) $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+moc_%.cpp: %.h
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(MOC) $(DEFAULT_INCLUDES) $(QT_INCLUDES) $(MOC_DEFS) $< | \
+	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
+
+%.qm: %.ts
+	@test -f $(LRELEASE)
+	@$(MKDIR_P) $(@D)
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LRELEASE) -silent $< -qm $@

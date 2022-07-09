@@ -1,0 +1,81 @@
+policy_module(roicoin, 1.100.1)
+
+########################################
+#
+# Declarations
+#
+
+type roicoin_t;
+type roicoin_exec_t;
+init_daemon_domain(roicoin_t, roicoin_exec_t)
+
+permissive roicoin_t;
+
+type roicoin_initrc_exec_t;
+init_script_file(roicoin_initrc_exec_t)
+
+type roicoin_conf_t;
+files_type(roicoin_conf_t)
+
+type roicoin_var_lib_t;
+files_type(roicoin_var_lib_t)
+
+type roicoin_var_run_t;
+files_type(roicoin_var_run_t)
+
+type roicoin_port_t;
+corenet_port(roicoin_port_t)
+
+########################################
+#
+# roicoin local policy
+#
+allow roicoin_t self:process { fork };
+
+allow roicoin_t self:fifo_file rw_fifo_file_perms;
+allow roicoin_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(roicoin_t, roicoin_conf_t, roicoin_conf_t)
+manage_files_pattern(roicoin_t, roicoin_conf_t, roicoin_conf_t)
+
+manage_dirs_pattern(roicoin_t, roicoin_var_lib_t, roicoin_var_lib_t)
+manage_files_pattern(roicoin_t, roicoin_var_lib_t, roicoin_var_lib_t)
+files_var_lib_filetrans(roicoin_t, roicoin_var_lib_t, { dir file })
+
+manage_dirs_pattern(roicoin_t, roicoin_var_run_t, roicoin_var_run_t)
+manage_files_pattern(roicoin_t, roicoin_var_run_t, roicoin_var_run_t)
+
+sysnet_dns_name_resolve(roicoin_t)
+corenet_all_recvfrom_unlabeled(roicoin_t)
+
+allow roicoin_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(roicoin_t)
+corenet_tcp_sendrecv_generic_node(roicoin_t)
+corenet_tcp_sendrecv_all_ports(roicoin_t)
+corenet_tcp_bind_generic_node(roicoin_t)
+
+gen_require(`
+    type roicoin_port_t;
+')
+allow roicoin_t roicoin_port_t:tcp_socket name_bind;
+
+gen_require(`
+    type roicoin_port_t;
+')
+allow roicoin_t roicoin_port_t:tcp_socket name_connect;
+
+domain_use_interactive_fds(roicoin_t)
+
+files_read_etc_files(roicoin_t)
+
+miscfiles_read_localization(roicoin_t)
+
+sysnet_dns_name_resolve(roicoin_t)
+
+allow roicoin_t roicoin_exec_t:file execute_no_trans;
+allow roicoin_t self:process setsched;
+corecmd_exec_ls(roicoin_t)
+corenet_tcp_connect_http_port(roicoin_t)
+dev_read_urand(roicoin_t)
+fs_getattr_xattr_fs(roicoin_t)
+kernel_read_system_state(roicoin_t)

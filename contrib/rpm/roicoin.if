@@ -1,0 +1,157 @@
+
+## <summary>policy for roicoin</summary>
+
+
+########################################
+## <summary>
+##	Transition to roicoin.
+## </summary>
+## <param name="domain">
+## <summary>
+##	Domain allowed to transition.
+## </summary>
+## </param>
+#
+interface(`roicoin_domtrans',`
+	gen_require(`
+		type roicoin_t, roicoin_exec_t;
+	')
+
+	corecmd_search_bin($1)
+	domtrans_pattern($1, roicoin_exec_t, roicoin_t)
+')
+
+
+########################################
+## <summary>
+##	Execute roicoin server in the roicoin domain.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`roicoin_initrc_domtrans',`
+	gen_require(`
+		type roicoin_initrc_exec_t;
+	')
+
+	init_labeled_script_domtrans($1, roicoin_initrc_exec_t)
+')
+
+
+########################################
+## <summary>
+##	Search roicoin lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`roicoin_search_lib',`
+	gen_require(`
+		type roicoin_var_lib_t;
+	')
+
+	allow $1 roicoin_var_lib_t:dir search_dir_perms;
+	files_search_var_lib($1)
+')
+
+########################################
+## <summary>
+##	Read roicoin lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`roicoin_read_lib_files',`
+	gen_require(`
+		type roicoin_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	read_files_pattern($1, roicoin_var_lib_t, roicoin_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage roicoin lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`roicoin_manage_lib_files',`
+	gen_require(`
+		type roicoin_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_files_pattern($1, roicoin_var_lib_t, roicoin_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage roicoin lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`roicoin_manage_lib_dirs',`
+	gen_require(`
+		type roicoin_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_dirs_pattern($1, roicoin_var_lib_t, roicoin_var_lib_t)
+')
+
+
+########################################
+## <summary>
+##	All of the rules required to administrate
+##	a roicoin environment
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+## <param name="role">
+##	<summary>
+##	Role allowed access.
+##	</summary>
+## </param>
+## <rolecap/>
+#
+interface(`roicoin_admin',`
+	gen_require(`
+		type roicoin_t;
+		type roicoin_initrc_exec_t;
+		type roicoin_var_lib_t;
+	')
+
+	allow $1 roicoin_t:process { ptrace signal_perms };
+	ps_process_pattern($1, roicoin_t)
+
+	roicoin_initrc_domtrans($1)
+	domain_system_change_exemption($1)
+	role_transition $2 roicoin_initrc_exec_t system_r;
+	allow $2 system_r;
+
+	files_search_var_lib($1)
+	admin_pattern($1, roicoin_var_lib_t)
+
+')
+

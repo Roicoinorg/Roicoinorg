@@ -1,0 +1,3 @@
+usr/local/bin/roicoind usr/bin
+usr/local/bin/roicoin-cli usr/bin
+debian/examples/roicoin.conf etc/roicoin

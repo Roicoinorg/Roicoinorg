@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Roi Coin
+Comment=ROICOIN P2P Cryptocurrency
+Comment[fr]=ROICOIN, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=ROICOIN, eşten eşe kriptografik sanal para birimi
+Exec=roicoin-qt %u
+Terminal=false
+Type=Application
+Icon=roicoin128
+MimeType=x-scheme-handler/roicoin;
+Categories=Office;Finance;
+StartupWMClass=ROIcoin-qt
