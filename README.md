@@ -4,7 +4,7 @@ Roicoin wallet repository
 ### Coin Specs
  
 • PoW Algorithm: Quark   
-• Premine: 50,000,000 SAPP   
+• Premine: 50,000,000 ROI  
 • PoW Blocks: 1 - 250   
 • PoS Blocks: Starting from 251   
 • Block Time: 60 Seconds    
