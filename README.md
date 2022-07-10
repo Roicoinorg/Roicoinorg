@@ -15,7 +15,7 @@ Roicoin wallet repository
 • Website https://roicoin.org/
 
 • Masternode: 70%
-• Staking: 30 %
+• Staking: 30%
 
 ### Rewards Breakdown
 ---
